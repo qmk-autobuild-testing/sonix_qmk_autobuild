@@ -28,6 +28,7 @@ if args.whitelist:
   WHITELISTED_BOARDS = whitelisted_kb_ret.stdout.decode().split('\n')
   if (args.debug):
     print ("using whitelist: ", args.whitelist)
+    print ("whitelist contents: ", WHITELISTED_BOARDS)
 
 if args.blacklist:
   # Grab the list of blacklisted keyboards
@@ -36,6 +37,7 @@ if args.blacklist:
   BLACKLISTED_BOARDS = blacklisted_kb_ret.stdout.decode().split('\n')
   if (args.debug):
     print ("using blacklist: ", args.blacklist)
+    print ("blacklist contents: ", BLACKLISTED_BOARDS)
 
 def main():
     for line in BOARDS:
