@@ -17,6 +17,8 @@ jobs:
         submodules: recursive
     - name: Clone main repository
       run: git clone https://github.com/SonixQMK/qmk_firmware.git
+    - name: Install rsync
+      run: apt-get install -y rsync
     - name: Copy keymaps
       run: rsync -a keyboards/ qmk_firmware/keyboards/
     - name: Copy build script
