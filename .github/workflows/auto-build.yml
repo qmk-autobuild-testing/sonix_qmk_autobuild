@@ -9,7 +9,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
 
-    container: jath03/sonix_base_container
+    container: d3xter93/sonix_base_container
 
     steps:
     - uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies
       run: cd qmk_firmware && pip3 install -r requirements.txt
     - name: Build Sonix keyboards
-      run:  cd qmk_firmware && python3 lib/python/build_all.py
+      run:  cd qmk_firmware && python3 lib/python/build.py
     - name: Declare some variables
       id: vars
       shell: bash
