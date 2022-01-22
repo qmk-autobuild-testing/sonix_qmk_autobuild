@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies
       run: cd qmk_firmware && pip3 install -r requirements.txt
     - name: Build Sonix keyboards
-      run:  cd qmk_firmware && python3 lib/python/build.py --whitelist KEYBOARD_LIST
+      run:  cd qmk_firmware && python3 lib/python/build.py --debug --whitelist KEYBOARD_LIST
     - name: Declare some variables
       id: vars
       shell: bash

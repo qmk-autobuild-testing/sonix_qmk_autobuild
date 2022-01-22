@@ -8,6 +8,7 @@ import argparse
 parser = argparse.ArgumentParser(description="Build QMK for Sonix keyboards")
 parser.add_argument("--whitelist", help="enables the whitelist (specify a filename)")
 parser.add_argument("--blacklist", help="enables the blacklist (specify a filename)")
+parser.add_argument("--debug", help="displays which keyboards are being excluded based on whitelist/blacklist", action="store_true")
 args = parser.parse_args()
 
 KEYBOARDS = []
@@ -51,10 +52,14 @@ def should_include(keyboard):
   if keyboard.strip() == "lib/python/build_all.py":
     return false
   if args.blacklist:
-    if (line.strip() in BLACKLISTED_BOARDS):
+    if (keyboard.strip() in BLACKLISTED_BOARDS):
+      if args.debug:
+        print ("Excluding blacklisted keyboard: ", keyboard.strip())
       return false
   if args.whitelist:
-    if line.strip() not in WHITELISTED_BOARDS:
+    if keyboard.strip() not in WHITELISTED_BOARDS:
+      if args.debug:
+        print ("Excluding non-whitelisted keyboard: ", keyboard.strip())
       return false
   return true
 
