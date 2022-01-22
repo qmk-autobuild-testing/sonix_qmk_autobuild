@@ -13,7 +13,7 @@ BOARDS = [
     # 'keychron/c1/rgb',
     # 'keychron/c1/white',
     # 'keychron/c2/white',
-    # 'keychron/k2/rgb',
+    'keychron/k2/rgb',
     # 'keychron/k2/rgb/via',
     # 'keychron/k2/rgb/optical',
     # 'keychron/k2/rgb/optical_via',
