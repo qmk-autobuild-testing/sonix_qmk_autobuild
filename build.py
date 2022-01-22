@@ -52,7 +52,8 @@ def main():
                     KEYBOARDS.append(line.strip()+"/optical")
                     KEYBOARDS.append(line.strip()+"/optical_via")
             else: KEYBOARDS.append(line.strip())
-    print ('Filtered and processed boards: ', KEYBOARDS)
+    if (args.debug):            
+      print ('Filtered and processed boards: ', KEYBOARDS)
 
 def should_include(keyboard):
   if keyboard.strip() == "":
