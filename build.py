@@ -65,12 +65,12 @@ def should_include(keyboard):
   if args.blacklist:
     if (keyboard.strip() in BLACKLISTED_BOARDS):
       if (args.debug):
-        print ("Excluding blacklisted keyboard: ", keyboard.strip())
+        print ("Skipping blacklisted keyboard: ", keyboard.strip())
       return False
   if args.whitelist:
     if keyboard.strip() not in WHITELISTED_BOARDS:
       if (args.debug):
-        print ("Excluding non-whitelisted keyboard: ", keyboard.strip())
+        print ("Skipping non-whitelisted keyboard: ", keyboard.strip())
       return False
   return True
 
