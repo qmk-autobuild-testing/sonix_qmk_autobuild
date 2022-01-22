@@ -4,7 +4,7 @@ import sys
 import re
 import argparse
 
-# Parse arguments, determine if whitelist and blaclist should be used
+# Parse arguments
 parser = argparse.ArgumentParser(description="Build QMK for Sonix keyboards")
 parser.add_argument("--whitelist", help="enables the whitelist (specify a filename)")
 parser.add_argument("--blacklist", help="enables the blacklist (specify a filename)")
