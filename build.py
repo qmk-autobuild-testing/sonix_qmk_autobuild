@@ -4,18 +4,16 @@ import sys
 import re
 KEYBOARDS = []
 # Search the repository for Sonix SN32F2 keyboard directories
-command = "grep -rl 'MCU = SN32F2' | sed -e 's/keyboards\///g' -e 's/\/rules.mk//g'| sort"
+command = "cd ../../ && grep -rl 'MCU = SN32F2' | sed -e 's/keyboards\///g' -e 's/\/rules.mk//g'| sort"
 # Grab the list of enabled keyboards
-enabled_kb_command = "cat KEYBOARD_LIST"
+enabled_kb_command = "cat ../../KEYBOARD_LIST"
 enabled_kb_ret = subprocess.run(enabled_kb_command, capture_output=True, shell=True)
 ENABLED_BOARDS = enabled_kb_ret.stdout.decode().split('\n')
 
 ret = subprocess.run(command, capture_output=True, shell=True)
 BOARDS = ret.stdout.decode().split('\n')
 def main():
-    print ('Enabled keyboards (raw): ', enabled_kb_ret)
     print ('Enabled keyboards (parsed): ', ENABLED_BOARDS)
-    print ('All keyboards (raw): ', ret)
     print ('All keyboards (parsed): ', BOARDS)
     for line in BOARDS:
         # We need to manipulate some non-standard directories
@@ -31,6 +29,7 @@ def main():
                     KEYBOARDS.append(line.strip()+"/optical")
                     KEYBOARDS.append(line.strip()+"/optical_via")
             else: KEYBOARDS.append(line.strip())
+    print ('Filtered and processed boards: ', KEYBOARDS)
     
 
 if __name__ == '__main__':

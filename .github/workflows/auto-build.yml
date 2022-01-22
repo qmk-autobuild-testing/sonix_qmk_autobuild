@@ -26,11 +26,13 @@ jobs:
     - name: Copy keymaps
       run: ls -lah && rsync -a keyboards/ qmk_firmware/keyboards/
     - name: Copy build script
-      run: cp build.py qmk_firmware/bin/build.py
+      run: cp build.py qmk_firmware/lib/python/build.py
+    - name: Copy whitelist
+      run: cp KEYBOARD_LIST qmk_firmware/KEYBOARD_LIST
     - name: Install dependencies
       run: cd qmk_firmware && pip3 install -r requirements.txt
-    - name: Build keyboards
-      run: cd qmk_firmware && python3 bin/build.py
+    - name: Build Sonix keyboards
+      run:  cd qmk_firmware && python3 lib/python/build_all.py
     - name: Declare some variables
       id: vars
       shell: bash
