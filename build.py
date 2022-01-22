@@ -48,20 +48,20 @@ def main():
 
 def should_include(keyboard):
   if keyboard.strip() == "":
-    return false
+    return False
   if keyboard.strip() == "lib/python/build_all.py":
-    return false
+    return False
   if args.blacklist:
     if (keyboard.strip() in BLACKLISTED_BOARDS):
       if args.debug:
         print ("Excluding blacklisted keyboard: ", keyboard.strip())
-      return false
+      return False
   if args.whitelist:
     if keyboard.strip() not in WHITELISTED_BOARDS:
       if args.debug:
         print ("Excluding non-whitelisted keyboard: ", keyboard.strip())
-      return false
-  return true
+      return False
+  return True
 
 if __name__ == '__main__':
     main()
