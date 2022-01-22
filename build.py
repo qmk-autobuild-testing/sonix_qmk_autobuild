@@ -4,9 +4,9 @@ import sys
 import re
 KEYBOARDS = []
 # Search the repository for Sonix SN32F2 keyboard directories
-command = "cd ../../ && grep -rl 'MCU = SN32F2' | sed -e 's/keyboards\///g' -e 's/\/rules.mk//g'| sort"
+command = "grep -rl 'MCU = SN32F2' | sed -e 's/keyboards\///g' -e 's/\/rules.mk//g'| sort"
 # Grab the list of enabled keyboards
-enabled_kb_command = "cat ../../KEYBOARD_LIST"
+enabled_kb_command = "cat KEYBOARD_LIST"
 enabled_kb_ret = subprocess.run(enabled_kb_command, capture_output=True, shell=True)
 ENABLED_BOARDS = enabled_kb_ret.stdout.decode().split('\n')
 
