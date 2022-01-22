@@ -1,0 +1,44 @@
+name: Compile Firmware
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    container: jath03/sonix_base_container
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Clone main repository
+      run: git clone https://github.com/SonixQMK/qmk_firmware.git
+    - name: Copy keymaps
+      run rsync -a keyboards/ qmk_firmware/keyboards/
+    - name: Copy build script
+      run cp build.py qmk_firmware/bin/build.py
+    - name: Install dependencies
+      run: cd qmk_firmware && pip3 install -r requirements.txt
+    - name: Build keyboards
+      run: cd qmk_firmware && python3 bin/build.py
+    - name: Declare some variables
+      id: vars
+      shell: bash
+      run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME//\//-})"
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+    - uses: actions/upload-artifact@v2
+      if: ${{ always() }}
+      with:
+        name: Pre-Compiled Firmware (${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }})
+        path: '*.bin'
+        
+    - uses: actions/upload-artifact@v2
+      if: ${{ always() }}
+      with:
+        name: Pre-Compiled Firmware
+        path: '*.bin'
