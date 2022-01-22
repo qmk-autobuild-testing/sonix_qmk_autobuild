@@ -3,7 +3,7 @@ This project attempts to provide an easier way to build Sonix QMK with your cust
 
 # Setup
 1. Fork this repository. You'll need a GitHub account to do this.
-2. In your new fork, go to the *Actions* tab and click the button to turn on workflows.
+2. In your new fork, go to the *Actions* tab and click the *I understand my workflows, go ahead and run them* button to turn on workflows.
 3. Click the *Code* tab
 4. Click the build.py file, then hit the pencil icon in the upper right corner of the section that shows the code
 5. You should see a list of keyboards in the *BOARDS* array. Find yours and uncomment it by removing the # at the beginning of the line. If you have more than one keyboard you want to build keymaps for, feel free to uncomment more than one! You can add keymaps for all of the boards that are uncommented by following the steps under *Adding your keymap(s)* below.
