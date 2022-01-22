@@ -18,9 +18,9 @@ jobs:
     - name: Clone main repository
       run: git clone https://github.com/SonixQMK/qmk_firmware.git
     - name: Copy keymaps
-      run rsync -a keyboards/ qmk_firmware/keyboards/
+      run: rsync -a keyboards/ qmk_firmware/keyboards/
     - name: Copy build script
-      run cp build.py qmk_firmware/bin/build.py
+      run: cp build.py qmk_firmware/bin/build.py
     - name: Install dependencies
       run: cd qmk_firmware && pip3 install -r requirements.txt
     - name: Build keyboards
