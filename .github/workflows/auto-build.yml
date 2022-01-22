@@ -28,7 +28,7 @@ jobs:
     - name: Copy build script
       run: cp build.py qmk_firmware/lib/python/build.py
     - name: Copy whitelist
-      run: cp KEYBOARD_LIST qmk_firmware/KEYBOARD_LIST
+      run: cp KEYBOARD_LIST qmk_firmware/WHITELIST
     - name: Copy blacklist
       run: cp BLACKLIST_TEST qmk_firmware/BLACKLIST
     - name: Install dependencies
