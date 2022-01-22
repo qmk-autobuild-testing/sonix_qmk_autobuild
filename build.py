@@ -13,6 +13,10 @@ ENABLED_BOARDS = enabled_kb_ret.stdout.decode().split('\n')
 ret = subprocess.run(command, capture_output=True, shell=True)
 BOARDS = ret.stdout.decode().split('\n')
 def main():
+    print ('Enabled keyboards (raw): ', enabled_kb_ret)
+    print ('Enabled keyboards (parsed): ', ENABLED_BOARDS)
+    print ('All keyboards (raw): ', ret)
+    print ('All keyboards (parsed): ', BOARDS)
     for line in BOARDS:
         # We need to manipulate some non-standard directories
         if line.strip() != "" and line.strip() != "lib/python/build_all.py" and line.strip() in ENABLED_BOARDS:
