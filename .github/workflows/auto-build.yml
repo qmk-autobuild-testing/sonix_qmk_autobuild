@@ -17,6 +17,8 @@ jobs:
         submodules: recursive
     - name: Clone main repository
       run: git clone https://github.com/SonixQMK/qmk_firmware.git
+    - name: Change main repository branch to configured build branch
+      run: cd qmk_firmware && git checkout `cat BUILD_BRANCH | tr -d '\r' | tr -d '\n'`
     - name: Pull in main repository submodules
       run: cd qmk_firmware && make git-submodule
     - name: Install rsync
