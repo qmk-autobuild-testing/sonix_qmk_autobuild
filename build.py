@@ -2,22 +2,36 @@ import subprocess
 import os
 import sys
 import re
+import argparse
+
+# Parse arguments, determine if whitelist and blaclist should be used
+parser = argparse.ArgumentParser(description="Build QMK for Sonix keyboards")
+parser.add_argument("--whitelist", help="enables the whitelist (specify a filename)")
+parser.add_argument("--blacklist", help="enables the blacklist (specify a filename)")
+args = parser.parse_args()
+
 KEYBOARDS = []
 # Search the repository for Sonix SN32F2 keyboard directories
 command = "grep -rl 'MCU = SN32F2' | sed -e 's/keyboards\///g' -e 's/\/rules.mk//g'| sort"
-# Grab the list of enabled keyboards
-enabled_kb_command = "cat KEYBOARD_LIST | tr -d '\r'"
-enabled_kb_ret = subprocess.run(enabled_kb_command, capture_output=True, shell=True)
-ENABLED_BOARDS = enabled_kb_ret.stdout.decode().split('\n')
+
+if (args.whitelist):
+  # Grab the list of whitelisted keyboards
+  whitelisted_kb_command = "cat " + args.whitelist + " | tr -d '\r'"
+  whitelisted_kb_ret = subprocess.run(whitelisted_kb_command, capture_output=True, shell=True)
+  WHITELISTED_BOARDS = whitelisted_kb_ret.stdout.decode().split('\n')
+
+if (args.blacklist):
+  # Grab the list of blacklisted keyboards
+  blacklisted_kb_command = "cat " + args.blacklist + " | tr -d '\r'"
+  blacklisted_kb_ret = subprocess.run(blacklisted_kb_command, capture_output=True, shell=True)
+  BLACKLISTED_BOARDS = blacklisted_kb_ret.stdout.decode().split('\n')
 
 ret = subprocess.run(command, capture_output=True, shell=True)
 BOARDS = ret.stdout.decode().split('\n')
 def main():
-    print ('Enabled keyboards (parsed): ', ENABLED_BOARDS)
-    print ('All keyboards (parsed): ', BOARDS)
     for line in BOARDS:
         # We need to manipulate some non-standard directories
-        if line.strip() != "" and line.strip() != "lib/python/build_all.py" and line.strip() in ENABLED_BOARDS:
+        if (should_include(line)):
             if re.match("^(gmmk)",line.strip()):
                 KEYBOARDS.append(line.strip()+"/rev2")
                 KEYBOARDS.append(line.strip()+"/rev3")
@@ -30,7 +44,19 @@ def main():
                     KEYBOARDS.append(line.strip()+"/optical_via")
             else: KEYBOARDS.append(line.strip())
     print ('Filtered and processed boards: ', KEYBOARDS)
-    
+
+def should_include(keyboard):
+  if (keyboard.strip() == ""):
+    return false
+  if (keyboard.strip() == "lib/python/build_all.py")
+    return false
+  if (args.blacklist):
+    if (line.strip() in BLACKLISTED_BOARDS):
+      return false
+  if (args.whitelist):
+    if (line.strip() not in WHITELISTED_BOARDS):
+      return false
+  return true
 
 if __name__ == '__main__':
     main()
