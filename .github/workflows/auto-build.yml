@@ -17,6 +17,8 @@ jobs:
         submodules: recursive
     - name: Clone main repository
       run: git clone https://github.com/SonixQMK/qmk_firmware.git
+    - name: Pull in main repository submodules
+      run: cd qmk_firmware && make git-submodule
     - name: Install rsync
       run: apt-get update && apt-get install --no-install-recommends -y rsync
     - name: Copy keymaps
