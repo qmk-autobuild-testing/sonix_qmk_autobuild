@@ -20,7 +20,7 @@ jobs:
     - name: Install rsync
       run: apt-get update && apt-get install --no-install-recommends -y rsync
     - name: Copy keymaps
-      run: rsync -a keyboards/ qmk_firmware/keyboards/
+      run: ls -lah && rsync -a keyboards/ qmk_firmware/keyboards/
     - name: Copy build script
       run: cp build.py qmk_firmware/bin/build.py
     - name: Install dependencies
