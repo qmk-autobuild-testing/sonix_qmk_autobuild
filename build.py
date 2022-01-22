@@ -15,20 +15,28 @@ KEYBOARDS = []
 # Search the repository for Sonix SN32F2 keyboard directories
 command = "grep -rl 'MCU = SN32F2' | sed -e 's/keyboards\///g' -e 's/\/rules.mk//g'| sort"
 
+ret = subprocess.run(command, capture_output=True, shell=True)
+BOARDS = ret.stdout.decode().split('\n')
+
+if args.debug:
+  print ("using debug mode")
+
 if args.whitelist:
   # Grab the list of whitelisted keyboards
   whitelisted_kb_command = "cat " + args.whitelist + " | tr -d '\r'"
   whitelisted_kb_ret = subprocess.run(whitelisted_kb_command, capture_output=True, shell=True)
   WHITELISTED_BOARDS = whitelisted_kb_ret.stdout.decode().split('\n')
+  if (args.debug):
+    print ("using whitelist: ", args.whitelist)
 
 if args.blacklist:
   # Grab the list of blacklisted keyboards
   blacklisted_kb_command = "cat " + args.blacklist + " | tr -d '\r'"
   blacklisted_kb_ret = subprocess.run(blacklisted_kb_command, capture_output=True, shell=True)
   BLACKLISTED_BOARDS = blacklisted_kb_ret.stdout.decode().split('\n')
+  if (args.debug):
+    print ("using blacklist: ", args.blacklist)
 
-ret = subprocess.run(command, capture_output=True, shell=True)
-BOARDS = ret.stdout.decode().split('\n')
 def main():
     for line in BOARDS:
         # We need to manipulate some non-standard directories
@@ -53,12 +61,12 @@ def should_include(keyboard):
     return False
   if args.blacklist:
     if (keyboard.strip() in BLACKLISTED_BOARDS):
-      if args.debug:
+      if (args.debug):
         print ("Excluding blacklisted keyboard: ", keyboard.strip())
       return False
   if args.whitelist:
     if keyboard.strip() not in WHITELISTED_BOARDS:
-      if args.debug:
+      if (args.debug):
         print ("Excluding non-whitelisted keyboard: ", keyboard.strip())
       return False
   return True
