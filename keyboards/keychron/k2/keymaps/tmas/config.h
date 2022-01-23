@@ -3,8 +3,6 @@
 #define PRODUCT_ID      0xFE02
 #define DEVICE_VER		0x0001
 
-#define KEY_OVERRIDE_ENABLE
-
 // RGB Matrix Effects
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
