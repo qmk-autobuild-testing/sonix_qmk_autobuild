@@ -23,14 +23,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 enum layer_names {
     _BASE = 0,
     _FL,
-    _RGB,
+    _RGBLYR,
 };
 
 // enum custom_keycodes {
 //     RGBCHOOSE = SAFE_RANGE
 // }
 
-const key_override_t rgb_key_override = ko_make_basic(MOD_MASK_SHIFT, RGB_MOD, _RGB);
+const key_override_t rgb_key_override = ko_make_basic(MOD_MASK_SHIFT, RGB_MOD, _RGBLYR);
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
@@ -102,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  				+--------------------------------------------------------------------------+-------------------+
 */ 				
     /*  Row:        0          1          2          3        4        5        6         7        8        9          10         11         12         13         14         15         16         17         18     */
-    [_RGB] =   { {     _BASE,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______, _______, _______,  _______, _______,  _BASE },
+    [_RGBLYR] =   { {     _BASE,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______, _______, _______,  _______, _______,  _BASE },
                 {   _______,  RGB_M_P,  RGB_M_B,  RGB_M_G,  RGB_M_SN,  RGB_M_K,  RGB_M_R,  RGB_M_SW,  _______,  _______,   _______,     _______,   _______,  _______,    KC_NO, _______ },
                 {   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,     _______,   _______,  _______,    KC_NO, _______ },
                 {   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,     _______,     KC_NO,  _______,    KC_NO,   KC_NO },
@@ -148,6 +148,7 @@ void keyboard_post_init_user(void) {
   // Customise these values to desired behaviour
   debug_enable=true;
   debug_matrix=true;
+  key_override_on();
   //debug_keyboard=true;
   //debug_mouse=true;
 }
