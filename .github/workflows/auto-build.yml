@@ -29,12 +29,10 @@ jobs:
       run: cp build.py qmk_firmware/lib/python/build.py
     - name: Copy whitelist
       run: cp KEYBOARD_LIST qmk_firmware/WHITELIST
-    - name: Copy blacklist
-      run: cp BLACKLIST_TEST qmk_firmware/BLACKLIST
     - name: Install dependencies
       run: cd qmk_firmware && pip3 install -r requirements.txt
     - name: Build Sonix keyboards
-      run:  cd qmk_firmware && python3 lib/python/build.py --debug --whitelist WHITELIST --blacklist=BLACKLIST
+      run:  cd qmk_firmware && python3 lib/python/build.py --debug --whitelist WHITELIST
     - name: Declare some variables
       id: vars
       shell: bash
