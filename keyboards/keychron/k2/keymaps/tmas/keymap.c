@@ -23,6 +23,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 enum layer_names {
     _BASE = 0,
     _FL,
+    _RGB,
+};
+
+// enum custom_keycodes {
+//     RGBCHOOSE = SAFE_RANGE
+// }
+
+const key_override_t rgb_key_override = ko_make_basic(MOD_MASK_SHIFT, RGB_MOD, _RGB);
+
+// This globally defines all key overrides to be used
+const key_override_t **key_overrides = (const key_override_t *[]){
+    &rgb_key_override,
+    NULL // Null terminate the array of overrides!
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -74,7 +87,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 {   _______,  KC_LALT,  KC_LGUI,    KC_NO,    KC_NO,    KC_NO,  _______,    KC_NO,    KC_NO,    KC_NO,   _______,     MO(_FL),   _______,  _______,  _______,   KC_NO }
               }  
 
+/*				+--------------------------------------------------------------------------+-------------------+
+				|     |    |    |    |    |    |    |    |    |    |    |    |    |   |    |    |    |    |    |
+				+--------------------------------------------------------------------------+----|----|----|----+				
+ 				|     |    |    |    |    |    |    |    |    |    |    |    |    |        |    |    |    |    |
+ 				+--------------------------------------------------------------------------+----|----|----|----+
+ 				|       |    |    |    |    |    |    |    |    |    |    |    |    |      |    |    |    |    |
+ 				+--------------------------------------------------------------------------+----|----|----|----+
+ 				|         |    |    |    |    |    |    |    |    |    |    |    |         |    |    |    |    |
+ 				+--------------------------------------------------------------------------+----|----|----|----+
+ 				|          |    |    |    |    |    |    |    |    |    |    |        |    |    |    |    |    |
+ 				+--------------------------------------------------------------------------+----|----|----|    +
+ 				|     |     |     |                             |     |   |     |    |    |    |    |    |    |
+ 				+--------------------------------------------------------------------------+-------------------+
+*/ 				
+    /*  Row:        0          1          2          3        4        5        6         7        8        9          10         11         12         13         14         15         16         17         18     */
+    [_RGB] =   { {     _BASE,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______, _______, _______,  _______, _______,  _BASE },
+                {   _______,  RGB_M_P,  RGB_M_B,  RGB_M_G,  RGB_M_SN,  RGB_M_K,  RGB_M_R,  RGB_M_SW,  _______,  _______,   _______,     _______,   _______,  _______,    KC_NO, _______ },
+                {   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,     _______,   _______,  _______,    KC_NO, _______ },
+                {   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,     _______,     KC_NO,  _______,    KC_NO,   KC_NO },
+                {   _______,    KC_NO,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,     _______,     KC_NO,  _______,  _______, RGB_SAI },
+                {   _______,  _______,  _______,    KC_NO,    KC_NO,    KC_NO,  _______,    KC_NO,    KC_NO,    KC_NO,   _______,     _______,   _______,  _______,  _______,   KC_NO }
+              }  
+
 };
+// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//       case RGBCHOOSE:
+//         if (record->event.pressed) {
+
+//         }
+//       default:
+//         return true;
+//     }
+// }
+
 bool dip_switch_update_user(uint8_t index, bool active){
   switch(index){
     case 0:
@@ -96,6 +143,7 @@ bool dip_switch_update_user(uint8_t index, bool active){
   }
   return true;
 }
+
 void keyboard_post_init_user(void) {
   // Customise these values to desired behaviour
   debug_enable=true;
